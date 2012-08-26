@@ -1,11 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :posts
 
-  map.resources :pages
-
-  map.resources :chapters
-
-  map.resources :comics
+  map.resources :comics do |comic|
+    comic.resources :chapters do |chapter|
+      chapter.resources :pages
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
 
