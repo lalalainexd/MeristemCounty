@@ -1,6 +1,6 @@
 <h1>Editing chapter</h1>
 
-<% form_for(@chapter) do |f| %>
+<% form_for([@chapter.comic, @chapter], :url => edit_comic_chapter_path) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -8,5 +8,4 @@
   </p>
 <% end %>
 
-<%= link_to 'Show', @chapter %> |
-<%= link_to 'Back', chapters_path %>
+<%= link_to 'Back', comic_chapter_path(@chapter.comic, @chapter) %>

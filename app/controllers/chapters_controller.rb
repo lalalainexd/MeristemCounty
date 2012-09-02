@@ -24,6 +24,7 @@ class ChaptersController < ApplicationController
   # GET /chapters/new
   # GET /chapters/new.xml
   def new
+    @comic = Comic.find(params[:comic_id])
     @chapter = Chapter.new
 
     respond_to do |format|
@@ -32,19 +33,24 @@ class ChaptersController < ApplicationController
     end
   end
 
+
   # GET /chapters/1/edit
   def edit
     @chapter = Chapter.find(params[:id])
+    
   end
 
   # POST /chapters
   # POST /chapters.xml
   def create
     @chapter = Chapter.new(params[:chapter])
+    @comic = Comic.find(params[:comic_id])
+
+    @chapter.comic = @comic
 
     respond_to do |format|
       if @chapter.save
-        format.html { redirect_to(@chapter, :notice => 'Chapter was successfully created.') }
+        format.html { redirect_to(comic_chapter_path(@comic, @chapter), :notice => 'Chapter was successfully created.') }
         format.xml  { render :xml => @chapter, :status => :created, :location => @chapter }
       else
         format.html { render :action => "new" }

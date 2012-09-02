@@ -6,7 +6,7 @@
 
 <% @comics.each do |comic| %>
   <tr>
-    <td><%= link_to 'Show', comic %></td>
+    <td><%= link_to comic.title, comic %></td>
     <td><%= link_to 'Edit', edit_comic_path(comic) %></td>
     <td><%= link_to 'Destroy', comic, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>

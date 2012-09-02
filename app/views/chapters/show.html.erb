@@ -1,3 +1,17 @@
+<h1><%= @chapter.title %></h1>
 
-<%= link_to 'Edit', edit_chapter_path(@chapter) %> |
-<%= link_to 'Back', chapters_path %>
+<%= link_to 'Edit', edit_comic_chapter_path(@chapter.comic, @chapter) %> |
+<%= link_to 'Back', comic_path(@chapter.comic) %>
+
+<%= link_to 'New page', new_comic_chapter_page_path(@chapter.comic, @chapter)%>
+
+<table>
+  <tr>
+  </tr>
+
+<% @chapter.pages.each do |page| %>
+  <tr>
+    <td><%= link_to 'A Page', comic_chapter_page_path(@chapter.comic, @chapter, page) %></td>
+  </tr>
+<% end %>
+</table>

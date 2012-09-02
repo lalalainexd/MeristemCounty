@@ -24,7 +24,10 @@ class PagesController < ApplicationController
   # GET /pages/new
   # GET /pages/new.xml
   def new
+    @chapter = Chapter.find(params[:chapter_id])
+    @comic = Comic.find(params[:comic_id])
     @page = Page.new
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,10 +44,14 @@ class PagesController < ApplicationController
   # POST /pages.xml
   def create
     @page = Page.new(params[:page])
+    @comic = Comic.find(params[:comic_id])
+    @chapter = Chapter.find(params[:chapter_id])
+
+    @page.chapter = @chapter
 
     respond_to do |format|
       if @page.save
-        format.html { redirect_to(@page, :notice => 'Page was successfully created.') }
+        format.html { redirect_to(comic_chapter_page_path(@comic, @chapter, @page), :notice => 'Page was successfully created.') }
         format.xml  { render :xml => @page, :status => :created, :location => @page }
       else
         format.html { render :action => "new" }
@@ -60,7 +67,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.update_attributes(params[:page])
-        format.html { redirect_to(@page, :notice => 'Page was successfully updated.') }
+        format.html { redirect_to(comic_chapter_page_path(@page.chapter.comic, @page.chapter, @page), :notice => 'Page was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
