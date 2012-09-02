@@ -11,7 +11,7 @@
 
 <% @chapter.pages.each do |page| %>
   <tr>
-    <td><%= link_to 'A Page', comic_chapter_page_path(@chapter.comic, @chapter, page) %></td>
+    <td><%= link_to page.page_number, comic_chapter_page_path(@chapter.comic, @chapter, page) %></td>
   </tr>
 <% end %>
 </table>

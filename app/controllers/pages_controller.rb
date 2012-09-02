@@ -27,7 +27,7 @@ class PagesController < ApplicationController
     @chapter = Chapter.find(params[:chapter_id])
     @comic = Comic.find(params[:comic_id])
     @page = Page.new
-
+    @page.build_post
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,6 +38,7 @@ class PagesController < ApplicationController
   # GET /pages/1/edit
   def edit
     @page = Page.find(params[:id])
+    @page.build_post unless @page.post
   end
 
   # POST /pages
@@ -48,7 +49,7 @@ class PagesController < ApplicationController
     @chapter = Chapter.find(params[:chapter_id])
 
     @page.chapter = @chapter
-
+    
     respond_to do |format|
       if @page.save
         format.html { redirect_to(comic_chapter_page_path(@comic, @chapter, @page), :notice => 'Page was successfully created.') }
