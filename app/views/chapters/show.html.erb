@@ -1,17 +1,21 @@
-<h1><%= @chapter.title %></h1>
+<% title @chapter.comic.title+" - "+@chapter.title, true %>
 
-<%= link_to 'Edit', edit_comic_chapter_path(@chapter.comic, @chapter) %> |
-<%= link_to 'Back', comic_path(@chapter.comic) %>
+<% if logged_in? %>
+  <%= link_to 'Edit', edit_comic_chapter_path(@chapter.comic, @chapter) %> |
+  <%= link_to 'Back', comic_path(@chapter.comic) %> | 
+  <%= link_to 'New page', new_comic_chapter_page_path(@chapter.comic, @chapter)%>
+  <br />
+  <%= image_tag @chapter.image.url( :medium ) %>
+  <br />
 
-<%= link_to 'New page', new_comic_chapter_page_path(@chapter.comic, @chapter)%>
-
-<table>
-  <tr>
-  </tr>
-
-<% @chapter.pages.each do |page| %>
-  <tr>
-    <td><%= link_to page.page_number, comic_chapter_page_path(@chapter.comic, @chapter, page) %></td>
-  </tr>
+  <table>
+    <% @chapter.pages.each do |page| %>
+      <tr>
+        <td><%= link_to "Page "+page.page_number.to_s, comic_chapter_page_path(@chapter.comic, @chapter, page) %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <%= image_tag @chapter.image.url(:large) %> <br />
+  <%= link_to @chapter.pages.first, comic_chapter_page_path(@chapter.comic, @chapter, @chapter.pages.first) %>
 <% end %>
-</table>

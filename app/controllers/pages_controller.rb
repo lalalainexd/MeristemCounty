@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  before_filter :login_required, :except => [:show]
   # GET /pages
   # GET /pages.xml
   def index
@@ -27,7 +28,7 @@ class PagesController < ApplicationController
     @chapter = Chapter.find(params[:chapter_id])
     @comic = Comic.find(params[:comic_id])
     @page = Page.new
-    @page.build_post
+    3.times { @page.panels.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,13 +39,14 @@ class PagesController < ApplicationController
   # GET /pages/1/edit
   def edit
     @page = Page.find(params[:id])
-    @page.build_post unless @page.post
+    3.times { @page.panels.build }
   end
 
   # POST /pages
   # POST /pages.xml
   def create
     @page = Page.new(params[:page])
+
     @comic = Comic.find(params[:comic_id])
     @chapter = Chapter.find(params[:chapter_id])
 
@@ -65,7 +67,7 @@ class PagesController < ApplicationController
   # PUT /pages/1.xml
   def update
     @page = Page.find(params[:id])
-
+    
     respond_to do |format|
       if @page.update_attributes(params[:page])
         format.html { redirect_to(comic_chapter_page_path(@page.chapter.comic, @page.chapter, @page), :notice => 'Page was successfully updated.') }
@@ -77,14 +79,19 @@ class PagesController < ApplicationController
     end
   end
 
+
   # DELETE /pages/1
   # DELETE /pages/1.xml
   def destroy
     @page = Page.find(params[:id])
+
+    @chapter = @page.chapter
+    @comic = @chapter.comic
+
     @page.destroy
 
     respond_to do |format|
-      format.html { redirect_to(pages_url) }
+      format.html { redirect_to(comic_chapter_path(@comic, @chapter)) }
       format.xml  { head :ok }
     end
   end

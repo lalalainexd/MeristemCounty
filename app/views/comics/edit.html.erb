@@ -1,7 +1,17 @@
 <h1>Editing comic</h1>
 
-<% form_for(@comic) do |f| %>
+<% form_for(@comic, :url => comic_path, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
+
+  <%= image_tag @comic.image.url(:small) %> <br />
+  <%= f.label :image, 'Image' %>
+  <%= f.file_field :image %> <br />
+
+  <%= f.label :title, 'Title' %>
+  <%= f.text_field :title %> <br />
+
+  <%= f.label :background_color, 'Background Color' %>
+  <%= f.text_field :background_color %>
 
   <p>
     <%= f.submit 'Update' %>

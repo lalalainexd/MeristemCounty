@@ -13,6 +13,7 @@ GEM
     activesupport (2.3.14)
     cocaine (0.2.1)
     mime-types (1.19)
+    nifty-generators (0.4.6)
     paperclip (2.7.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -35,6 +36,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  nifty-generators
   paperclip (~> 2.7)
   rails (~> 2.3.14)
   sqlite3-ruby

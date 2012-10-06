@@ -1,4 +1,5 @@
 class ComicsController < ApplicationController
+  before_filter :login_required, :except => [:show, :index]
   # GET /comics
   # GET /comics.xml
   def index

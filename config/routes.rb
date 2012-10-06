@@ -1,8 +1,26 @@
 ActionController::Routing::Routes.draw do |map|
+  map.signup 'signup', :controller => 'users', :action => 'new'
+  map.logout 'logout', :controller => 'sessions', :action => 'destroy'
+  map.login 'login', :controller => 'sessions', :action => 'new'
+  map.resources :sessions
+
+  map.root :controller => 'comics', :action => 'index'
+
+#  map.new_comic 'comics/new', :controller => 'comics', :action => 'new'
+#  map.comic ':comic_title', :controller => 'comics', :action => 'show', :conditions => {:method => :get}
+#  map.comic ':comic_title', :controller => 'comics', :action => 'create', :conditions => {:method => :post}
+#  map.edit_comic ':comic_title', :controller => 'comics', :action => 'edit'
+#  
+#  map.comic_chapter ':comic_title/:chapter_id/', :controller => 'chapters', :action => 'show'
+  
+
+#  map.resources :users
+
 
   map.resources :comics do |comic|
     comic.resources :chapters do |chapter|
-      chapter.resources :pages
+      chapter.resources :pages do |page|
+      end
     end
   end
 
@@ -39,6 +57,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   # map.root :controller => "welcome"
+  map.root :controller => "comics", :action => "index"
 
   # See how all your routes lay out with "rake routes"
 

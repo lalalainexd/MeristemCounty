@@ -1,8 +1,12 @@
 
-<%= link_to 'Edit', edit_comic_chapter_page_path(@page.chapter.comic, @page.chapter, @page) %> |
-<%= link_to 'Back', comic_chapter_path(@page.chapter.comic, @page.chapter) %>
+<% if logged_in? %>
+  <%= link_to 'Edit', edit_comic_chapter_page_path(@page.chapter.comic, @page.chapter, @page) %> |
+  <%= link_to 'Back', comic_chapter_path(@page.chapter.comic, @page.chapter) %> |
+  <%= link_to 'Delete Page', comic_chapter_page_path(@page.chapter.comic, @page.chapter, @page), :confirm =>'Are you sure?', :method => :delete %> <br />
 
-<%= image_tag @page.comic_strip.url %>
+  <% @page.panels.each do |panel| %>
+    <%= image_tag panel.image.url( :large ) %>
+  <% end %>
 
 
-
+<% end %>

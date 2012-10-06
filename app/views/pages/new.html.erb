@@ -2,22 +2,13 @@
 
 <% form_for([@comic, @chapter, @page], :url => comic_chapter_pages_path, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
-
-  <%= f.label :comic_strip, 'Image' %>
-  <%= f.file_field :comic_strip %> <br />
-
-  <% f.fields_for :post do |post_fields| %>
-
-    <%= post_fields.label :title, 'Title' %>
-    <%= post_fields.text_field :title %> <br />
-
-    <%= post_fields.label :content, 'Content' %>
-    <%= post_fields.text_area :content %>
+  <% f.fields_for :panels do |asset| %>
+    <% if asset.object.new_record? %>
+      <%= asset.file_field :image %><br \>
+    <% end %>
   <% end %>
-
-
   <p>
-  <%= f.submit 'Create' %>
+    <%= f.submit 'Create' %>
   </p>
 <% end %>
 

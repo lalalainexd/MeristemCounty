@@ -1,4 +1,5 @@
 class ChaptersController < ApplicationController
+  before_filter :login_required, :except => [:show]
   # GET /chapters
   # GET /chapters.xml
   def index
@@ -63,10 +64,11 @@ class ChaptersController < ApplicationController
   # PUT /chapters/1.xml
   def update
     @chapter = Chapter.find(params[:id])
+    @comic = Comic.find(params[:comic_id])
 
     respond_to do |format|
       if @chapter.update_attributes(params[:chapter])
-        format.html { redirect_to(@chapter, :notice => 'Chapter was successfully updated.') }
+        format.html { redirect_to(comic_chapter_path(@comic, @chapter), :notice => 'Chapter was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -79,10 +81,11 @@ class ChaptersController < ApplicationController
   # DELETE /chapters/1.xml
   def destroy
     @chapter = Chapter.find(params[:id])
+    @comic = @chapter.comic
     @chapter.destroy
 
     respond_to do |format|
-      format.html { redirect_to(chapters_url) }
+      format.html { redirect_to(comic_path(@comic)) }
       format.xml  { head :ok }
     end
   end

@@ -1,17 +1,31 @@
-<%= @comic.title %>
-<%= link_to 'Edit', edit_comic_path(@comic) %> |
-<%= link_to 'Back', comics_path %>
+<% title @comic.title %>
+<% if logged_in? %>
+  <%= image_tag @comic.image.url( :large ) %>
+  <br />
+  <%= link_to 'Edit', edit_comic_path(@comic) %> |
+  <%= link_to 'Back', comics_path %> |
+  <%= link_to 'New chapter', new_comic_chapter_path(@comic)%>
 
-<%= link_to 'New chapter', new_comic_chapter_path(@comic)%>
+  <table>
+    <% @comic.chapters.each do |chapter| %>
+      <tr>
+        <td><%= image_tag chapter.image.url( :thumb ) %></td>
 
-<table>
-  <tr>
-  </tr>
+        <td><%= link_to chapter.title, comic_chapter_path(@comic, chapter) %></td>
+          <td><%= link_to 'Edit', edit_comic_chapter_path(chapter.comic, chapter) %></td>
+          <td><%= link_to 'Destroy', comic_chapter_path(chapter.comic, chapter), :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <%= image_tag @comic.image.url( :large ) %><br />
+  <table>
+    <% @comic.chapters.each do |chapter| %>
+      <tr>
 
-<% @comic.chapters.each do |chapter| %>
-  <tr>
-    <td><%= link_to chapter.title, comic_chapter_path(@comic, chapter) %></td>
-  </tr>
+        <td><%= link_to chapter.title, comic_chapter_path(@comic, chapter) %></td>
+      </tr>
+    <% end %>
+  </table>
 <% end %>
-</table>
 

@@ -1,18 +1,20 @@
-<h1>Listing comics</h1>
-
 <table>
   <tr>
   </tr>
 
 <% @comics.each do |comic| %>
   <tr>
+    <td><%= image_tag comic.image.url(:small) %></td>
     <td><%= link_to comic.title, comic %></td>
-    <td><%= link_to 'Edit', edit_comic_path(comic) %></td>
-    <td><%= link_to 'Destroy', comic, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if logged_in? %>
+      <td><%= link_to 'Edit', edit_comic_path(comic) %></td>
+      <td><%= link_to 'Destroy', comic, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
 
 <br />
-
+<% if logged_in? %>
 <%= link_to 'New comic', new_comic_path %>
+<% end %>

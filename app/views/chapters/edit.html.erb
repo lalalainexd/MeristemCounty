@@ -1,10 +1,17 @@
 <h1>Editing chapter</h1>
 
-<% form_for([@chapter.comic, @chapter], :url => edit_comic_chapter_path) do |f| %>
+<% form_for([@chapter.comic, @chapter], :url => comic_chapter_path, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 
+  <%= f.label :title, 'Title' %>
+  <%= f.text_field :title %> <br />
+
+  <%= image_tag @chapter.image.url( :thumb ) %>
+  <%= f.label :image, 'Image' %>
+  <%= f.file_field :image %> 
+
   <p>
-    <%= f.submit 'Update' %>
+  <%= f.submit 'Update' %>
   </p>
 <% end %>
 
